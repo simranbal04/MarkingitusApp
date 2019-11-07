@@ -47,7 +47,16 @@ public class MainActivity extends AppCompatActivity {
     // MARK: Particle Publish / Subscribe variables
     private long subscriptionId;
     Button monitorButton;
-    TextView txtView;
+    TextView textView;
+    Handler handler;
+    ListView listView;
+    ArrayAdapter<String> adapter;
+    String[] ListElements = new  String[] {};
+    long Millisecondtime, StartTime, TimeBuff, UpdateTime = 0L ;
+    int seconds , minutes, milliseconds;
+
+    List<String> ArrayListelement;
+
 
 
     // MARK: Particle device
@@ -56,8 +65,43 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        monitorButton= findViewById(R.id.timerButton);
+//        textView = findViewById(R.id.showTime);
+////        long time = 0;
+////
+////        long millis = System.currentTimeMillis() = time;
+////        int seconds = (int)
+//
+//        handler = new Handler();
+//        ArrayListelement = new ArrayList<String>(Arrays.asList(ListElements));
+//        adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple)
 
 //
+
+        monitorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StartTime = (int) SystemClock.uptimeMillis();
+                handler.postDelayed(runnable,0);
+            }
+
+
+            public Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    Millisecondtime = SystemClock.uptimeMillis() = StartTime;
+                    UpdateTime = TimeBuff + Millisecondtime;
+                    seconds = (int) (UpdateTime / 1000);
+                    minutes = seconds / 60;
+                    seconds = seconds %60;
+                    milliseconds = (int) (UpdateTime % 1000);
+                    textView.setText("" + minutes + String.format("%02d",seconds) + ":" + String.format("%03d",milliseconds) );
+
+                    handler.postDelayed(this,0);
+                }
+            };
+        });
 
             }
 
