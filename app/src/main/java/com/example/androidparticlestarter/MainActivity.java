@@ -58,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
     List<String> ArrayListelement;
 
 
+    String ans = "0";
+    String ans1 = "4";
+    String ans2 = "9";
+    String ans3 = "14";
+    String ans4 = "19";
+    String ans5 = "20";
+
+
 
     // MARK: Particle device
     private ParticleDevice mDevice;
@@ -90,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             public Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    Millisecondtime = SystemClock.uptimeMillis() = StartTime;
+                    Millisecondtime = (int) SystemClock.uptimeMillis() - StartTime;
                     UpdateTime = TimeBuff + Millisecondtime;
                     seconds = (int) (UpdateTime / 1000);
                     minutes = seconds / 60;
@@ -98,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                     milliseconds = (int) (UpdateTime % 1000);
                     textView.setText("" + minutes + String.format("%02d",seconds) + ":" + String.format("%03d",milliseconds) );
 
+
+                    if (String.valueOf(seconds).equals(ans)){
+                        positive("positive");
+                    }
                     handler.postDelayed(this,0);
                 }
             };
@@ -145,9 +157,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void positive(String second)
+    {
+
+        Log.d(TAG, "positive:");
+        Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
+            @Override
+            public Object callApi(@NonNull ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+                // put your logic here to talk to the particle
+                // --------------------------------------------
+                List<String> functionParameters = new ArrayList<String>();
+//                functionParameters.add();
+                try {
+                    mDevice.callFunction(""+ second, functionParameters);
+
+                } catch (ParticleDevice.FunctionDoesNotExistException e1) {
+                    e1.printStackTrace();
+                }
 
 
+                return -1;
+            }
 
+            @Override
+            public void onSuccess(Object o) {
+                // put your success message here
+                Log.d(TAG, "Success: Turned light green!!");
+            }
+
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+                // put your error handling code here
+                Log.d(TAG, exception.getBestMessage());
+            }
+        });
     }
+
+
+
+
+}
 
 
