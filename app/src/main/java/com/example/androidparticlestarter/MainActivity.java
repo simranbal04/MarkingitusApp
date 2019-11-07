@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private final String PARTICLE_PASSWORD = "Nirvair@99";
 
     // MARK: Particle device-specific info
-    private final String DEVICE_ID = "340036000f47363333343437\n";
+    private final String DEVICE_ID = "340036000f47363333343437";
 
     // MARK: Particle Publish / Subscribe variables
     private long subscriptionId;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         monitorButton= findViewById(R.id.timerButton);
-//        textView = findViewById(R.id.showTime);
+        textView = findViewById(R.id.showTime);
 ////        long time = 0;
 ////
 ////        long millis = System.currentTimeMillis() = time;
@@ -107,9 +107,15 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("" + minutes + String.format("%02d",seconds) + ":" + String.format("%03d",milliseconds) );
 
 
-                    if (String.valueOf(seconds).equals(ans)){
-                        positive("positive");
+                    if (String.valueOf(seconds).equals(ans))
+                    {
+                        second("positive");
                     }
+
+                    // try catch
+
+
+
                     handler.postDelayed(this,0);
                 }
             };
@@ -157,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void positive(String second)
+    public void second(String second)
     {
 
         Log.d(TAG, "positive:");
